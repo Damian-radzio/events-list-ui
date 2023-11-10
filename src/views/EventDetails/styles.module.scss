@@ -1,0 +1,53 @@
+.eventDetailsContainer {
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.paper {
+  width: 80%;
+  margin: auto;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+  padding: 20px;
+  margin-top: 20px;
+  max-width: 600px;
+
+  .header {
+    text-align: center;
+  }
+
+  .date {
+    text-align: center;
+    color: red;
+    margin-bottom: 10px;
+  }
+
+  .description {
+    margin-top: 10px;
+  }
+
+  .eventType,
+  .eventVenue {
+    margin-top: 20px;
+  }
+
+  .contactInfo {
+    display: flex;
+    flex-direction: column;
+
+    margin: 6px 0 12px 0;
+    span {
+      margin-bottom: 10px;
+    }
+  }
+  .additionalInfo {
+    margin-top: 12px;
+  }
+
+  img {
+    width: 100%;
+    max-width: 100%;
+    margin-top: 20px;
+  }
+}
