@@ -1,0 +1,19 @@
+.tileWrapper {
+  max-width: 95%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+.tile {
+  position: relative;
+  background-size: cover;
+}
+
+.title {
+  padding-top: 12px;
+}
+.moreBtn {
+  button {
+    padding: 6px 12px !important;
+  }
+}

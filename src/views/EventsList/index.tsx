@@ -1,44 +1,31 @@
-import React from 'react';
-import { useSelector } from 'react-redux';
-import styles from './styles.module.scss';
-import { Link } from 'react-router-dom';
+import { Typography } from '@mui/material';
+import React, { useEffect } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
+
+import { EventTile } from '../../components/EventTile';
 import { EventModel } from '../../models/EventsModel';
-import Card from '@mui/material/Card';
-import CardActions from '@mui/material/CardActions';
-import CardContent from '@mui/material/CardContent';
-import Button from '@mui/material/Button';
-import Typography from '@mui/material/Typography';
+import { AppDispatch } from '../../store';
+import { fetchEvents } from '../../thunks/events/thunks';
+import styles from './styles.module.scss';
 
 export const EventsList: React.FC = () => {
+  const dispatch = useDispatch<AppDispatch>();
   const { eventsList } = useSelector((state: any) => state.events);
+  useEffect(() => {
+    dispatch(fetchEvents());
+  }, [dispatch]);
 
   return (
-    <div className={styles.eventsList}>
+    <>
       {eventsList?.length > 0 ? (
-        eventsList?.map((ev: EventModel) => (
-          <Link to={`/events/${ev.id}`} className={styles.event} key={ev.id}>
-            <Card sx={{ minWidth: 275, maxWidth: 300 }}>
-              <CardContent>
-                <Typography
-                  sx={{ fontSize: 14 }}
-                  color="text.secondary"
-                  gutterBottom
-                >
-                  {ev?.date}
-                </Typography>
-                <Typography variant="h5" component="div">
-                  {ev?.title}
-                </Typography>
-              </CardContent>
-              <CardActions>
-                <Button size="small">Learn More</Button>
-              </CardActions>
-            </Card>
-          </Link>
-        ))
+        <div className={styles.eventsList}>
+          {eventsList?.map((ev: EventModel) => <EventTile key={ev?.id} ev={ev} />)}
+        </div>
       ) : (
-        <p>Brak wydarzeń</p>
+        <Typography variant="h4" color="textPrimary" textAlign={'center'}>
+          Brak nadchodzących wydarzeń.
+        </Typography>
       )}
-    </div>
+    </>
   );
 };

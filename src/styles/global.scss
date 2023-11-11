@@ -10,16 +10,21 @@ body {
 
 .viewWrapper {
   display: flex;
-}
-.navbarWrapper {
-  min-width: 300px;
-
-  overflow: hidden;
+  flex-direction: column;
 }
 .componentsWrapper {
+  margin-top: 48px;
   width: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
 .MuiContainer-root {
   display: flex !important;
   justify-content: center !important;
+}
+.MuiCardMedia-root {
+  width: calc(100% - 24px) !important;
+  margin: 12px auto;
+  border-radius: 12px;
 }

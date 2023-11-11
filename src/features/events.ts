@@ -1,35 +1,65 @@
 import { createSlice } from '@reduxjs/toolkit';
-import { EventsModel, typeOfEvent } from '../models/EventsModel';
 
-export const initialState: EventsModel = {
-  eventsList: [
-    {
-      id: 1,
-      date: '19.05.2023',
-      time: '20:00',
-      title: 'KULT',
-      description: 'Nowa odsłona Kult juz za tydzien',
-      image: '',
-      typeOfEvent: typeOfEvent.SPORT,
-      phone_number: '123456789',
-      email: 'raek10@vp.pl',
-      event_venue: 'Katowice',
-    },
-  ],
+import { statusOfEvent } from '../models/EventsModel';
+import { addEvent, fetchEventDetails, fetchEvents } from '../thunks/events/thunks';
+
+const initialState = {
+  eventsList: [{}],
+  eventDetails: {
+    id: null,
+    date: '',
+    time: '',
+    title: '',
+    description: '',
+    image: null,
+    typeOfEvent: '',
+    phone_number: '',
+    email: '',
+    event_venue: '',
+  },
+  fetchEventDetailsStatus: '',
+  fetchEventsStatus: '',
+  addEventStatus: '',
 };
 
 const eventsSlice = createSlice({
-  name: 'parameters',
+  name: 'events',
   initialState,
-  reducers: {
-    updateEvents: (state, action) => {
-      state.eventsList.push(action.payload);
-    },
-    fetchEventDetails: (state, action) => {
-      state.eventsList.find((el: any) => el.id === action.payload);
-    },
+  reducers: {},
+  extraReducers: builder => {
+    builder
+      .addCase(fetchEventDetails.pending, state => {
+        state.fetchEventDetailsStatus = statusOfEvent.pending;
+      })
+      .addCase(fetchEventDetails.fulfilled, (state, action) => {
+        state.fetchEventDetailsStatus = statusOfEvent.succeeded;
+        state.eventDetails = action.payload;
+      })
+      .addCase(fetchEventDetails.rejected, state => {
+        state.fetchEventDetailsStatus = statusOfEvent.failed;
+      })
+      .addCase(fetchEvents.pending, state => {
+        state.fetchEventsStatus = statusOfEvent.pending;
+      })
+      .addCase(fetchEvents.fulfilled, (state, action) => {
+        state.fetchEventsStatus = statusOfEvent.succeeded;
+        state.eventsList = action.payload;
+      })
+      .addCase(fetchEvents.rejected, state => {
+        state.fetchEventsStatus = statusOfEvent.failed;
+      })
+      .addCase(addEvent.pending, state => {
+        state.addEventStatus = statusOfEvent.pending;
+      })
+      .addCase(addEvent.fulfilled, (state, action) => {
+        state.addEventStatus = statusOfEvent.succeeded;
+        state.eventsList.push(action.payload);
+      })
+      .addCase(addEvent.rejected, state => {
+        state.addEventStatus = statusOfEvent.failed;
+      });
   },
 });
 
-export const { updateEvents, fetchEventDetails } = eventsSlice.actions;
+export const results = (state: any): void => state.events;
 export default eventsSlice.reducer;

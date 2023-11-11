@@ -1,11 +1,11 @@
-.header {
-  font-size: 32px;
-  margin-bottom: 32px;
-}
-
 .form {
   display: flex;
   flex-direction: column;
-  width: 350px;
+  justify-content: center;
+  width: 450px;
+  height: 100%;
   gap: 12px;
+}
+.attachmentName {
+  padding-left: 12px;
 }

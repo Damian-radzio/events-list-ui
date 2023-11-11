@@ -1,21 +1,23 @@
-import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
+import { Divider } from '@mui/material';
 import { Provider } from 'react-redux';
-import { EventsList } from './views/EventsList';
-import { EventDetails } from './views/EventDetails';
-import { AddEventForm } from './views/AddEventForm';
-import store from './store/index';
-import { Navigation } from './components/Navigation';
+import { BrowserRouter as Router, Navigate, Route, Routes } from 'react-router-dom';
 
-function App() {
+import { Navigation } from './components/Navigation';
+import store from './store/index';
+import { AddEventForm } from './views/AddEventForm';
+import { EventDetails } from './views/EventDetails';
+import { EventsList } from './views/EventsList';
+
+function App(): JSX.Element {
   return (
     <Provider store={store}>
       <Router>
         <div className="viewWrapper">
-          <div className="navbarWrapper">
-            <Navigation />
-          </div>
+          <Navigation />
+          <Divider />
           <div className="componentsWrapper">
             <Routes>
+              <Route path="/" element={<Navigate to="/events" />} />
               <Route path="/events" element={<EventsList />} />
               <Route path="/events/:id" element={<EventDetails />} />
               <Route path="/add-event" element={<AddEventForm />} />
