@@ -15,7 +15,8 @@ import { useDispatch, useSelector } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
 import * as Yup from 'yup';
 
-import { typeOfEvent } from '../../models/EventsModel';
+import { currentDayString, currentTimeString } from '../../helpers/Date';
+import { TypeOfEvent } from '../../models/EventsModel';
 import { AppDispatch } from '../../store';
 import { addEvent, fetchEvents } from '../../thunks/events/thunks';
 import styles from './styles.module.scss';
@@ -25,15 +26,19 @@ const validationSchema = Yup.object({
   time: Yup.string().required('Czas jest wymagany'),
   title: Yup.string().required('Tytuł jest wymagany'),
   description: Yup.string().required('Opis jest wymagany'),
-  image: Yup.mixed().required('File is required'),
+  image: Yup.string().required('Zdjęcie jest wymagane'),
   typeOfEvent: Yup.string().required('Typ wydarzenia jest wymagany'),
-  phone_number: Yup.string().required('Numer telefonu jest wymagany'),
+  phone_number: Yup.string()
+    .min(9, 'Minimalna liczba znaków to 9')
+    .required('Numer telefonu jest wymagany'),
   email: Yup.string().email('Nieprawidłowy adres email').required('Email jest wymagany'),
   event_venue: Yup.string().required('Miejsce wydarzenia jest wymagane'),
 });
 
 export const AddEventForm = (): JSX.Element => {
   const navigate = useNavigate();
+  const [isImageUploaded, setIsImageUploaded] = useState(false);
+  const [isFormSaved, setIsFormSaved] = useState(false);
   const dispatch = useDispatch<AppDispatch>();
   const { eventsList } = useSelector((state: any) => state.events);
   const [selectedFileName, setSelectedFileName] = useState('');
@@ -44,13 +49,13 @@ export const AddEventForm = (): JSX.Element => {
 
   const formik = useFormik({
     initialValues: {
-      id: eventsList.length + 1,
+      id: eventsList[eventsList.length - 1].id + 1,
       date: '',
       time: '',
       title: '',
       description: '',
       image: '',
-      typeOfEvent: '',
+      typeOfEvent: null,
       phone_number: '',
       email: '',
       event_venue: '',
@@ -64,6 +69,9 @@ export const AddEventForm = (): JSX.Element => {
 
   const resetForm = (): void => {
     formik.resetForm();
+    setSelectedFileName('');
+    setIsFormSaved(false);
+    setIsImageUploaded(false);
   };
 
   const handleImageChange = (e: React.ChangeEvent<HTMLInputElement>): void => {
@@ -75,11 +83,29 @@ export const AddEventForm = (): JSX.Element => {
     };
     reader.readAsDataURL(e.currentTarget.files[0]);
     setSelectedFileName(e.currentTarget.files[0].name);
+    setIsImageUploaded(true);
   };
 
-  useEffect(() => {
-    console.log(formik.values.image);
-  }, [formik.values.image]);
+  const handleDateChange = (e: React.ChangeEvent<HTMLInputElement>): void => {
+    const selectedDate = e.target.value;
+    formik.handleChange(e);
+
+    if (selectedDate === currentDayString) {
+      formik.setFieldValue('time', currentTimeString);
+    }
+  };
+
+  const handleTimeChange = (e: React.ChangeEvent<HTMLInputElement>): void => {
+    const selectedTime = e.target.value;
+    formik.handleChange(e);
+    if (formik.values.date === currentDayString) {
+      if (selectedTime < currentTimeString) {
+        formik.setFieldValue('time', currentTimeString);
+      } else {
+        formik.setFieldValue('time', selectedTime);
+      }
+    }
+  };
 
   return (
     <Container>
@@ -88,19 +114,21 @@ export const AddEventForm = (): JSX.Element => {
           type="date"
           name="date"
           value={formik.values.date}
-          onChange={formik.handleChange}
+          onChange={handleDateChange}
           onBlur={formik.handleBlur}
           error={formik.touched.date && Boolean(formik.errors.date)}
           helperText={formik.touched.date && formik.errors.date}
+          inputProps={{ min: currentDayString }}
         />
         <TextField
           type="time"
           name="time"
           value={formik.values.time}
-          onChange={formik.handleChange}
+          onChange={handleTimeChange}
           onBlur={formik.handleBlur}
           error={formik.touched.time && Boolean(formik.errors.time)}
           helperText={formik.touched.time && formik.errors.time}
+          inputProps={{ min: currentTimeString }}
         />
         <TextField
           label="Tytuł"
@@ -110,6 +138,9 @@ export const AddEventForm = (): JSX.Element => {
           onBlur={formik.handleBlur}
           error={formik.touched.title && Boolean(formik.errors.title)}
           helperText={formik.touched.title && formik.errors.title}
+          inputProps={{
+            min: formik.values.date === currentDayString ? currentTimeString : undefined,
+          }}
         />
         <TextField
           label="Opis"
@@ -136,7 +167,11 @@ export const AddEventForm = (): JSX.Element => {
             </Button>
           </label>
           {selectedFileName && <span className={styles.attachmentName}>{selectedFileName}</span>}
+          {isFormSaved && !isImageUploaded ? (
+            <span className={styles.uploadImageError}>Zdjęcie jest wymagane</span>
+          ) : null}
         </Grid>
+
         <FormControl>
           <InputLabel id="typeOfEvent-label">Typ wydarzenia</InputLabel>
           <Select
@@ -146,9 +181,9 @@ export const AddEventForm = (): JSX.Element => {
             onChange={formik.handleChange}
             onBlur={formik.handleBlur}
             error={formik.touched.typeOfEvent && Boolean(formik.errors.typeOfEvent)}>
-            <MenuItem value={typeOfEvent.SPORT}>Sport</MenuItem>
-            <MenuItem value={typeOfEvent.CULTURE}>Kultura</MenuItem>
-            <MenuItem value={typeOfEvent.ENTERTAINMNENT}>Rozrywka</MenuItem>
+            <MenuItem value={TypeOfEvent.SPORT}>Sport</MenuItem>
+            <MenuItem value={TypeOfEvent.CULTURE}>Kultura</MenuItem>
+            <MenuItem value={TypeOfEvent.ENTERTAINMNENT}>Rozrywka</MenuItem>
           </Select>
         </FormControl>
         <TextField
@@ -179,7 +214,11 @@ export const AddEventForm = (): JSX.Element => {
           error={formik.touched.event_venue && Boolean(formik.errors.event_venue)}
           helperText={formik.touched.event_venue && formik.errors.event_venue}
         />
-        <Button type="submit" color="primary" variant="contained">
+        <Button
+          type="submit"
+          color="primary"
+          variant="contained"
+          onClick={() => setIsFormSaved(true)}>
           Dodaj wydarzenie
         </Button>
         <Button type="button" color="primary" variant="outlined" onClick={resetForm}>

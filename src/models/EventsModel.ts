@@ -12,13 +12,13 @@ export type EventModel = {
   title: string;
   description: string;
   image: string;
-  typeOfEvent: typeOfEvent | string;
+  typeOfEvent: TypeOfEvent | null;
   phone_number: string;
   email: string;
   event_venue: string;
 };
 
-export enum typeOfEvent {
+export enum TypeOfEvent {
   SPORT = 'Sport',
   CULTURE = 'Kultura',
   ENTERTAINMNENT = 'Rozrywka',
@@ -26,6 +26,6 @@ export enum typeOfEvent {
 
 export enum statusOfEvent {
   pending = 'pending',
-  succeeded = 'fulfilled',
+  succeeded = 'success',
   failed = 'failed',
 }
