@@ -20,19 +20,19 @@ The purpose of this project is to create and manage local events. Users can add 
 #### Clone Repository
 ```bash
 git clone https://github.com/Damian-radzio/events-list-ui.git
-
+```
 #### Install dependencies
 ```bash
 npm install
-
+```
 #### Start the database server:
 ```bash
 json-server --watch events.json --port 3001
-
+```
 
 #### Start the application:
 ```bash
 npm start
-
+```
 ### The application should now be accessible at http://localhost:3000.
 
