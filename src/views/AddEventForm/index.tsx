@@ -63,7 +63,7 @@ export const AddEventForm = (): JSX.Element => {
     validationSchema: validationSchema,
     onSubmit: values => {
       dispatch(addEvent({ ...values }));
-      navigate(-1);
+      navigate('/events');
     },
   });
 

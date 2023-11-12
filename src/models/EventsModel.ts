@@ -29,3 +29,9 @@ export enum statusOfEvent {
   succeeded = 'success',
   failed = 'failed',
 }
+
+export enum EventTimeModel {
+  future = 'future',
+  all = 'all',
+  past = 'past',
+}

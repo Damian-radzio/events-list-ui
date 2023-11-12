@@ -1,6 +1,21 @@
-.eventsList {
+.EventsListView {
   width: 95%;
   max-width: 1420px;
+  display: flex;
+  flex-direction: column;
+}
+.buttonsWrapper {
+  display: flex;
+  margin-bottom: 48px;
+  gap: 24px;
+}
+.loader {
+  width: 100%;
+  display: flex;
+  justify-content: center;
+}
+.eventsList {
+  width: 100%;
   display: flex;
   flex-wrap: wrap;
   gap: 48px;
@@ -9,8 +24,15 @@
   justify-content: flex-start;
 }
 
-@media (max-width: 640px) {
+@media (max-width: 700px) {
   .eventsList {
     justify-content: center;
+  }
+}
+@media (max-width: 480px) {
+  .buttonsWrapper {
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
   }
 }
