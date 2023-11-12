@@ -27,7 +27,7 @@ cd events-list-ui
 ```
 #### Change Node version using nvm. 
 ```bash
-nvm use 18
+nvm use 20
 ```
 #### Install dependencies
 ```bash
