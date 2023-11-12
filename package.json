@@ -3,7 +3,7 @@
   "version": "0.1.0",
   "private": true,
   "scripts": {
-    "start": "react-scripts start",
+    "start": "concurrently \"json-server --watch events.json --port 9999\" \"react-scripts start \"",
     "build": "react-scripts build"
   },
   "dependencies": {
@@ -49,6 +49,7 @@
     ]
   },
   "devDependencies": {
+    "concurrently": "^8.2.2",
     "eslint-config-prettier": "^9.0.0",
     "eslint-plugin-css-modules": "^2.12.0",
     "eslint-plugin-prettier": "^5.0.1"
