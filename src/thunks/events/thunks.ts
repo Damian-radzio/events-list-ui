@@ -1,7 +1,6 @@
 import { createAsyncThunk } from '@reduxjs/toolkit';
-
-import { getEventById, getEvents, postEvent } from '../../api/events';
-import { EventModel } from '../../models/EventsModel';
+import { getEventById, getEvents, postEvent } from 'api/events';
+import { EventModel } from 'models/EventsModel';
 
 export const fetchEventDetails = createAsyncThunk(
   'machines/fetchEventDetails',

@@ -25,23 +25,17 @@ export const Navigation = (): JSX.Element => {
         onClick={() => navigate(-1)}>
         <ArrowBackIosIcon sx={{ fontSize: 32, color: '#1876D1' }} />
       </div>
-      <Link
-        onClick={() => setActiveButton('/events')}
-        className={classnames(styles.navLink, activeButton === '/events' ? styles.disabled : null)}
-        to="/events">
-        <Button variant="contained">
+      <Link onClick={() => setActiveButton('/events')} className={styles.navLink} to="/events">
+        <Button variant="contained" disabled={activeButton === '/events'}>
           <ListIcon />
           Lista Wydarzeń
         </Button>
       </Link>
       <Link
         onClick={() => setActiveButton('/add-event')}
-        className={classnames(
-          styles.navLink,
-          activeButton === '/add-event' ? styles.disabled : null
-        )}
+        className={styles.navLink}
         to="/add-event">
-        <Button variant="contained">
+        <Button variant="contained" disabled={activeButton === '/add-event'}>
           <AddIcon />
           Dodaj Wydarzenie
         </Button>

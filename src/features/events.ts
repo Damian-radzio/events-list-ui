@@ -1,7 +1,6 @@
 import { createSlice } from '@reduxjs/toolkit';
-
-import { statusOfEvent } from '../models/EventsModel';
-import { addEvent, fetchEventDetails, fetchEvents } from '../thunks/events/thunks';
+import { statusOfEvent } from 'models/EventsModel';
+import { addEvent, fetchEventDetails, fetchEvents } from 'thunks/events/thunks';
 
 const initialState = {
   eventsList: [{}],

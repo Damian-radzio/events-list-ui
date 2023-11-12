@@ -1,4 +1,5 @@
-import { EventModel } from '../models/EventsModel';
+import { EventModel } from 'models/EventsModel';
+
 import { BASE_URL } from './base_url';
 import client from './client';
 

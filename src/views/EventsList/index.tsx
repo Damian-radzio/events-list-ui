@@ -1,11 +1,11 @@
 import { Button, CircularProgress, Typography } from '@mui/material';
+import { currentDayString } from 'helpers/Date';
+import { EventModel, EventTimeModel } from 'models/EventsModel';
 import React, { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
+import { AppDispatch } from 'store';
+import { fetchEvents } from 'thunks/events/thunks';
 
-import { currentDayString } from '../../helpers/Date';
-import { EventModel, EventTimeModel } from '../../models/EventsModel';
-import { AppDispatch } from '../../store';
-import { fetchEvents } from '../../thunks/events/thunks';
 import { EventTile } from './components/EventTile';
 import styles from './styles.module.scss';
 

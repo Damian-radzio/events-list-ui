@@ -1,4 +1,5 @@
 import { Divider } from '@mui/material';
+import { Footer } from 'components/Footer';
 import { Provider } from 'react-redux';
 import { BrowserRouter as Router, Navigate, Route, Routes } from 'react-router-dom';
 
@@ -23,6 +24,7 @@ function App(): JSX.Element {
               <Route path="/add-event" element={<AddEventForm />} />
             </Routes>
           </div>
+          <Footer />
         </div>
       </Router>
     </Provider>

@@ -9,16 +9,16 @@ import {
   TextField,
 } from '@material-ui/core';
 import { useFormik } from 'formik';
+import { currentDayString, currentTimeString } from 'helpers/Date';
+import { TypeOfEvent } from 'models/EventsModel';
 import { useState } from 'react';
 import { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
+import { AppDispatch } from 'store';
+import { addEvent, fetchEvents } from 'thunks/events/thunks';
 import * as Yup from 'yup';
 
-import { currentDayString, currentTimeString } from '../../helpers/Date';
-import { TypeOfEvent } from '../../models/EventsModel';
-import { AppDispatch } from '../../store';
-import { addEvent, fetchEvents } from '../../thunks/events/thunks';
 import styles from './styles.module.scss';
 
 const validationSchema = Yup.object({

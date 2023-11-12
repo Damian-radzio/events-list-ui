@@ -8,10 +8,17 @@ body {
   font-family: sans-serif;
 }
 
+body {
+  position: relative;
+  min-height: 100vh;
+}
+
 .viewWrapper {
   display: flex;
   flex-direction: column;
+  padding-bottom: 80px;
 }
+
 .componentsWrapper {
   margin-top: 48px;
   width: 100%;
