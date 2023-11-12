@@ -15,25 +15,24 @@ The purpose of this project is to create and manage local events. Users can add 
 ### Installation and Usage Information
 
 #### Prerequisites:
-- Node.js version 18
+- Node.js version 20
 
 #### Clone Repository.
 ```bash
 git clone https://github.com/Damian-radzio/events-list-ui.git
 ```
-#### Change Node version using nvm. 
-```bash
-nvm use 18
-```
 #### Then go to project folder.
 ```bash
 cd events-list-ui
+```
+#### Change Node version using nvm. 
+```bash
+nvm use 18
 ```
 #### Install dependencies
 ```bash
 npm install
 ```
-
 #### Start the application with json server:
 ```bash
 npm start
