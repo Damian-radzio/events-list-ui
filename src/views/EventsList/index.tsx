@@ -20,9 +20,9 @@ export const EventsList: React.FC = () => {
 
   const filteredEventsList = eventsList.filter((ev: EventModel) => {
     if (filter === 'past') {
-      return ev.date < currentDayString;
+      return ev?.date < currentDayString;
     } else if (filter === 'future') {
-      return ev.date >= currentDayString;
+      return ev?.date >= currentDayString;
     }
     return true;
   });
