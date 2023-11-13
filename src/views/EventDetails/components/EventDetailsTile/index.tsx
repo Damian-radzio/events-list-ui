@@ -1,5 +1,4 @@
-import CardMedia from '@material-ui/core/CardMedia';
-import { Divider, Paper, Typography } from '@mui/material';
+import { CardMedia, Divider, Paper, Typography } from '@mui/material';
 import { EventModel } from 'models/EventsModel';
 
 import styles from './styles.module.scss';

@@ -1,13 +1,3 @@
-import {
-  Button,
-  Container,
-  FormControl,
-  Grid,
-  InputLabel,
-  MenuItem,
-  Select,
-  TextField,
-} from '@material-ui/core';
 import { useFormik } from 'formik';
 import { currentDayString, currentTimeString } from 'helpers/Date';
 import { TypeOfEvent } from 'models/EventsModel';
@@ -20,6 +10,16 @@ import { addEvent, fetchEvents } from 'thunks/events/thunks';
 import * as Yup from 'yup';
 
 import styles from './styles.module.scss';
+import {
+  Container,
+  TextField,
+  Grid,
+  Button,
+  FormControl,
+  InputLabel,
+  Select,
+  MenuItem,
+} from '@mui/material';
 
 const validationSchema = Yup.object({
   date: Yup.string().required('Data jest wymagana'),

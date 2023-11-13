@@ -19,7 +19,7 @@ function App(): JSX.Element {
           <div className="componentsWrapper">
             <Routes>
               <Route path="/" element={<Navigate to="/events" />} />
-              <Route path="/events" element={<EventsList />} />
+              <Route path="/events/*" element={<EventsList />} />
               <Route path="/events/:id" element={<EventDetails />} />
               <Route path="/add-event" element={<AddEventForm />} />
             </Routes>
